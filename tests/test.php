@@ -40,8 +40,16 @@ test('seeded share link resolves to the seeded document', function () {
     ');
     $stmt->execute();
     $row = $stmt->fetch();
+
     assert_true($row !== false, 'expected the seeded share to resolve');
     assert_true($row['title'] === 'Welcome Packet', 'unexpected title: ' . var_export($row['title'], true));
+});
+
+test('documents exist in database', function () {
+    $stmt = db()->query('SELECT COUNT(*) as count FROM documents');
+    $result = $stmt->fetch();
+
+    assert_true((int) $result['count'] > 0, 'expected at least one document');
 });
 
 echo "\n{$pass} passed, {$fail} failed.\n";
